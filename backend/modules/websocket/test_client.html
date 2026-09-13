@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Test Client</title>
+    <style>
+        body { font-family: monospace; background: #1e1e1e; color: #00ff00; padding: 20px; }
+        .log { margin-top: 20px; padding: 10px; border: 1px solid #333; height: 300px; overflow-y: auto; background: #000; }
+        .channel-btn { background: #333; color: white; border: none; padding: 10px 15px; cursor: pointer; margin-right: 10px; font-weight: bold; }
+        .channel-btn:hover { background: #555; }
+        h2 { color: #fff; }
+    </style>
+</head>
+<body>
+
+    <h2>GridMind WebSocket Live Tester</h2>
+    <p>Select a channel to listen to:</p>
+    
+    <div>
+        <button class="channel-btn" onclick="connect('microgrid')">/ws/microgrid</button>
+        <button class="channel-btn" onclick="connect('agents')">/ws/agents</button>
+        <button class="channel-btn" onclick="connect('market')">/ws/market</button>
+        <button class="channel-btn" style="background: #aa0000;" onclick="disconnect()">Disconnect</button>
+    </div>
+
+    <div class="log" id="logBox">
+        <div style="color: #888;">[System] Waiting for connection...</div>
+    </div>
+
+    <script>
+        let ws = null;
+        const logBox = document.getElementById('logBox');
+
+        function logMessage(msg, color="#00ff00") {
+            const div = document.createElement('div');
+            div.style.color = color;
+            div.innerHTML = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            logBox.appendChild(div);
+            logBox.scrollTop = logBox.scrollHeight;
+        }
+
+        function connect(channel) {
+            disconnect();
+            logMessage(`[System] Connecting to /ws/${channel}...`, "#ffaa00");
+            
+            // Connect to local Uvicorn server
+            ws = new WebSocket(`ws://127.0.0.1:8000/ws/${channel}`);
+            
+            ws.onopen = () => {
+                logMessage(`[System] Connected successfully to ${channel}!`, "#00aaff");
+            };
+            
+            ws.onmessage = (event) => {
+                // The data will arrive as JSON text
+                logMessage(`[Data] ${event.data}`);
+            };
+            
+            ws.onclose = () => {
+                logMessage(`[System] Disconnected from ${channel}`, "#ff5555");
+            };
+        }
+
+        function disconnect() {
+            if (ws) {
+                ws.close();
+                ws = null;
+            }
+        }
+    </script>
+</body>
+</html>

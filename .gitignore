@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# Environment Variables
+.env
+
+# Database
+*.db
+*.sqlite3
+
+# ML Models (large files)
+data_storage/trained_models/*.pkl
+data_storage/trained_models/*.joblib
+data_storage/trained_models/*.bin
+
+# Logs
+*.log
+data_storage/*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node (frontend)
+node_modules/
+.next/
+out/
+.cache/
+
+# Temporary
+*.tmp
+*.bak
+scratch/

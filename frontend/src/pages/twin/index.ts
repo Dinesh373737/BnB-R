@@ -1,0 +1,1 @@
+export { DigitalTwinPage } from "./DigitalTwinPage";

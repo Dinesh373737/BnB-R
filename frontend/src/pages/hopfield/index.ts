@@ -1,0 +1,1 @@
+export { HopfieldLandscapePage } from "./HopfieldLandscapePage";
