@@ -46,7 +46,7 @@ function Header() {
     <header className="app-header">
       <div className="app-header__brand">
         <Link to="/" className="app-header__logo-link">
-          <span className="app-header__logo">⚡</span>
+          <span className="app-header__logo" aria-hidden="true">GM</span>
         </Link>
         <div className="app-header__brand-text">
           <h1 className="app-header__title">
